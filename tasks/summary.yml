@@ -21,12 +21,11 @@
   - rke2_download_kubeconf | bool
 
 - name: Summary
-  when: inventory_hostname == groups[rke2_servers_group_name].0
   block:
     - name: Prepare summary
       ansible.builtin.shell: |
         set -e
-        {{ rke2_data_path }}/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes -o wide --show-labels
+        {{ rke2_data_path }}/bin/kubectl --kubeconfig /var/lib/rancher/rke2/agent/kubelet.kubeconfig get nodes -o wide --show-labels
       args:
         executable: /bin/bash
       changed_when: false
